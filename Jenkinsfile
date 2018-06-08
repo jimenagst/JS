@@ -4,13 +4,13 @@ pipeline {
       stage('Build') {
         steps{
           echo 'Building...'
-          sh './gradlew assembly'
+          sh './project/webApplication/gradlew assembly'
         }
       }
       stage('Test') { 
         steps{   
           echo 'Testing...'
-          sh './gradlew test'
+          sh './project/webApplication/gradlew test'
         }
       } 
       stage('Deploy') {  
