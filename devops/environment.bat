@@ -21,4 +21,3 @@ set OS_REGION_NAME=bootstack-jalasoft
 set VM_NAME=devops-vm-1
 set OS_SERVER_NAME=devops-vm-1
 set OS_FLAVOR_NAME=f2.desktop.medium
-
