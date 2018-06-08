@@ -11,6 +11,7 @@ pipeline {
         steps{   
           echo 'Testing...'
           sh './project/webApplication/gradlew test -p project/webApplication'
+          junit 'project/project/webApplication/junitTests/*.xml'
         }
       } 
       stage('Deploy') {  
