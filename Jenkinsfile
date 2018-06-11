@@ -12,7 +12,7 @@ pipeline {
           echo 'Testing...'
           sh './project/webApplication/gradlew test -p project/webApplication'
           junit 'project/webApplication/build/test-results/test/*.xml'
-          archiveArtifacts 'project/webApplication/build/reports/tests/test/*'
+          archiveArtifacts 'project/webApplication/build/reports/tests/test/**/*'
         }
       } 
       stage('Package') {  
