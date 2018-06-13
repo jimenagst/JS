@@ -11,9 +11,17 @@ pipeline {
         steps{   
           echo 'Testing...'
           sh './project/webApplication/gradlew test -p project/webApplication'
+          junit 'project/webApplication/build/test-results/test/*.xml'
+          archiveArtifacts 'project/webApplication/build/reports/tests/test/**/*'
         }
       } 
-      stage('Deploy') {  
+      stage('Package') {  
+        steps{
+          echo 'Packaging...' 
+          archiveArtifacts 'project/webApplication/build/libs/customized-1.0.war' 
+        }
+      } 
+      stage('Deploying') {  
         steps{
           echo 'Deploying...' 
         }
