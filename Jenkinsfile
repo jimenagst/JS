@@ -18,7 +18,7 @@ pipeline {
       stage('CodeQuality') {  
         steps{
           echo 'Using sonarqube...'
-          sh './project/webApplication/gradlew sonarqube --info'
+          sh './project/webApplication/gradlew sonarqube -p project/webApplication'
         }
       }
       stage('Package') {  
