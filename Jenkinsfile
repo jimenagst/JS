@@ -15,12 +15,19 @@ pipeline {
           archiveArtifacts 'project/webApplication/build/reports/tests/test/**/*'
         }
       } 
+      stage('CodeQuality') {  
+        steps{
+          echo 'Using sonarqube...'
+          sh './project/webApplication/gradlew sonarqube'
+        }
+      }
       stage('Package') {  
         steps{
           echo 'Packaging...' 
           archiveArtifacts 'project/webApplication/build/libs/customized-1.0.war' 
         }
-      } 
+      }      
+      
       stage('Deploying') {  
         steps{
           echo 'Deploying...' 
