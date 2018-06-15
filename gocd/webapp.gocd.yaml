@@ -11,32 +11,32 @@ pipelines:
             assemble:
               artifacts:
                 - build:
-                    source: webappdemo/build/libs/*.war
+                    source: project/webApplication/build/libs/*.war
                     destination: war
               tasks:
               - exec:
-                  command: ./webappdemo/gradlew
+                  command: ./project/webApplication/gradlew
                   arguments:
                     - "clean"
                     - "assemble"
                     - "-p"
-                    - "webappdemo"
+                    - "project/webApplication"
       - Test:
             jobs:
               unit_tests:
                 artifacts:
                   - build:
-                      source: webappdemo/build/reports/tests/test/**/*
+                      source: project/webApplication/build/reports/tests/test/**/*
                       destination: html_report
                   - test:
-                      source: webappdemo/build/test-results/test/*.xml
+                      source: project/webApplication/build/test-results/test/*.xml
                       destination: test_results/
                 tabs:
                   report: html_report/index.html
                 tasks:
                 - exec:
-                    command: ./webappdemo/gradlew
+                    command: ./project/webApplication/gradlew
                     arguments:
                     - "test"
                     - "-p"
-                    - "webappdemo"
+                    - "project/webApplication"
