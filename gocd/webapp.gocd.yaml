@@ -1,0 +1,42 @@
+#format_version: 2
+pipelines:
+  js-webapp-ci:
+    group: WEBAPP
+    materials:
+      repo:
+        git: https://github.com/devopsteam03/JS.git
+    stages:
+      - build:
+          jobs:
+            assemble:
+              artifacts:
+                - build:
+                    source: project/webApplication/build/libs/*.war
+                    destination: war
+              tasks:
+              - exec:
+                  command: ./project/webApplication/gradlew
+                  arguments:
+                    - "clean"
+                    - "assemble"
+                    - "-p"
+                    - "project/webApplication"
+      - Test:
+            jobs:
+              unit_tests:
+                artifacts:
+                  - build:
+                      source: project/webApplication/build/reports/tests/test/**/*
+                      destination: html_report
+                  - test:
+                      source: project/webApplication/build/test-results/test/*.xml
+                      destination: test_results/
+                tabs:
+                  report: html_report/index.html
+                tasks:
+                - exec:
+                    command: ./project/webApplication/gradlew
+                    arguments:
+                    - "test"
+                    - "-p"
+                    - "project/webApplication"
