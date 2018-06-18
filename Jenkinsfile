@@ -30,7 +30,8 @@ pipeline {
       
       stage('Deploying') {  
         steps{
-          echo 'Deploying...' 
+          echo 'Deploying...'
+          sh './project/webApplication/gradlew -b deploy.gradle -p project/webApplication'
         }
       } 
     }
