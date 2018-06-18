@@ -1,0 +1,34 @@
+plugins {
+    id 'org.hidetake.ssh' version '2.9.0'
+}
+
+ssh.settings {
+    knownHosts = allowAnyHosts
+
+}
+
+remotes {
+    development {
+        host = '10.28.134.89'
+        user = 'ubuntu'
+        identity = file("${HOME}/.ssh/id_rsa")
+    }
+}
+
+task deploy() {
+    doLast {
+        ssh.run {
+            session(remotes.development) {
+                execute 'echo Stopping Tomcat service...'
+                execute 'sudo systemctl stop tomcat', ignoreError: true
+                remove '/var/lib/tomcat8/webapps/customized-1.0', '/var/lib/tomcat8/webapps/customized-1.0.war'
+
+                execute 'echo Sending deployment archives...'
+                put from: '/project/webApplication/build/libs/customized-1.0.war', into: '/var/lib/tomcat8/webapps/customized-1.0.war'
+
+                execute 'echo Starting Tomcat service...'
+                execute 'sudo systemctl start tomcat', ignoreError: true
+            }
+        }
+    }
+}
