@@ -40,3 +40,15 @@ pipelines:
                     - "test"
                     - "-p"
                     - "project/webApplication"
+      - Deploy:
+            jobs:
+              deployment:
+              tasks:
+              - exec:
+                  command: ./project/webApplication/gradlew
+                  arguments:
+                    - "-b"
+                    - "deploy.gradle"
+                    - "deploy"
+                    - "-p"
+                    - "project/webApplication"
