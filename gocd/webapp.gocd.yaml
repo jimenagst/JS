@@ -52,3 +52,4 @@ pipelines:
                     - "deploy"
                     - "-p"
                     - "project/webApplication"
+                    - "--info"
