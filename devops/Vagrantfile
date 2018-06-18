@@ -24,7 +24,18 @@ Vagrant.configure('2') do |config|
     s.vm.provision "docker"
     s.vm.provision "shell", path:"scripts/bootstrap.sh"
     s.vm.provision "file", source: ENV['SSH_PRIVATE_KEY_PATH'], destination: "$HOME/docker/jenkins/.ssh/id_rsa"
+    s.vm.provision "file", source: ENV['SSH_PRIVATE_KEY_PATH'], destination: "$HOME/docker/go_server/.ssh/id_rsa"
+    s.vm.provision "file", source: ENV['SSH_PRIVATE_KEY_PATH'], destination: "$HOME/docker/go_agent/.ssh/id_rsa"
     s.vm.provision "file", source: "docker/docker-compose.yml", destination: "$HOME/docker/docker-compose.yml"
     s.vm.provision "docker_compose", compose_version: '1.21.2', yml: "/home/ubuntu/docker/docker-compose.yml", run: "always"
+  end
+
+  config.vm.define "#{ENV['VM_NAME']}-server-2" do |s|
+    s.vm.provision "shell", inline: "sudo apt-get install default-jdk -y"
+    s.vm.provider :openstack do |os, override|
+      os.server_name = "#{ENV['OS_SERVER_NAME']}-dev-server"
+      os.flavor = ENV['OS_FLAVOR_NAME']
+      override.vm.synced_folder '.', '/vagrant', disabled: true
+    end
   end
 end
