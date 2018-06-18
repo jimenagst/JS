@@ -24,13 +24,14 @@ pipeline {
       stage('Package') {  
         steps{
           echo 'Packaging...' 
-          archiveArtifacts 'project/webApplication/build/libs/customized-1.0.war' 
+          archiveArtifacts 'project/webApplication/build/libs/customized-1.0.war'
         }
       }      
       
       stage('Deploying') {  
         steps{
-          echo 'Deploying...' 
+          echo 'Deploying...'
+          sh './project/webApplication/gradlew -b deploy.gradle deploy -p project/webApplication'
         }
       } 
     }
