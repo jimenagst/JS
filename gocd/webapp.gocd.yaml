@@ -54,3 +54,20 @@ pipelines:
                     - "project/webApplication"
                     - "-Puser_home=/home/go/.ssh"
                     - "--info"
+
+      - Acceptance:
+            jobs:
+              acceptance_test:
+                artifacts:
+                  - test:
+                      source: acceptance/build/reports/cucumber/*
+                      destination: cucumber_report
+                tabs:
+                  report: cucumber_report/index.html
+                tasks:
+                - exec:
+                    command: ./acceptance/gradlew
+                    arguments:
+                    - "test"
+                    - "-p"
+                    - "acceptance"
