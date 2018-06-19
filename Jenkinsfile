@@ -33,6 +33,13 @@ pipeline {
           echo 'Deploying...'
           sh './project/webApplication/gradlew -b deploy.gradle deploy -p project/webApplication'
         }
-      } 
+      }
+      stage('Acceptance') {  
+        steps{
+          echo 'Acceptance tests...'
+          sh './acceptance/gradlew test -p acceptance'
+          archiveArtifacts 'acceptance/build/reports/cucumber/*'
+        }
+      }      
     }
   }
