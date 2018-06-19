@@ -52,4 +52,5 @@ pipelines:
                     - "deploy"
                     - "-p"
                     - "project/webApplication"
+                    - "-Puser_home=/home/go/.ssh"
                     - "--info"
